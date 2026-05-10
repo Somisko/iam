@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Devoir Master Data Analyst – Éthique et Gouvernance des données</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f8f9fa;
+            --color-text-primary: #1e2a3a;
+            --color-text-secondary: #5a6e7c;
+            --color-border-tertiary: #e2e8f0;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f5f9;
+            font-family: var(--font-sans);
+            padding: 20px;
+        }
+        .exam {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            user-select: none;
+        }
+        textarea, input {
+            user-select: text;
+        }
+        .cover {
+            background: #0a3d1f;
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .cover h1 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .cover h2 {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #9fe1cb;
+            margin-bottom: 1rem;
+        }
+        .cover-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .meta-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--border-radius-md);
+            padding: 8px 12px;
+        }
+        .meta-box label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #9fe1cb;
+            margin-bottom: 4px;
+        }
+        .meta-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 0.85rem;
+            padding: 4px 0;
+            outline: none;
+            font-family: var(--font-sans);
+        }
+        .meta-box input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        .rules {
+            background: var(--color-background-secondary);
+            border-left: 3px solid #e24b4a;
+            padding: 12px 16px;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+        }
+        .timer-box {
+            background: #0a3d1f;
+            color: #fff;
+            border-radius: var(--border-radius-md);
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .timer-box.warning {
+            background: #e24b4a;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .prog-wrap {
+            margin-bottom: 1.5rem;
+        }
+        .prog-lbl {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 6px;
+        }
+        .prog-bar {
+            background: var(--color-background-secondary);
+            border-radius: 20px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .prog-fill {
+            background: #1d9e75;
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.2s;
+        }
+        .sec-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            border-bottom: 1px solid var(--color-border-tertiary);
+            padding-bottom: 8px;
+            margin: 1.8rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sec-badge {
+            font-size: 0.7rem;
+            font-weight: 400;
+            background: var(--color-background-secondary);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .qcard {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1rem 1.25rem;
+            margin-bottom: 12px;
+        }
+        .qh {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .qn {
+            background: #0a3d1f;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .qt {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+        .pts {
+            font-size: 0.7rem;
+            color: var(--color-text-secondary);
+            font-weight: normal;
+            margin-left: 6px;
+        }
+        .opts {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .opt {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 12px;
+            border: 1px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--color-text-primary);
+            transition: background 0.1s;
+        }
+        .opt:hover {
+            background: var(--color-background-secondary);
+        }
+        .opt.sel {
+            background: #e1f5ee;
+            border-color: #1d9e75;
+            color: #085041;
+        }
+        .opt input {
+            accent-color: #1d9e75;
+            margin-top: 2px;
+        }
+        .scenario {
+            background: #f9fbe7;
+            border-left: 3px solid #afb42b;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            font-size: 0.8rem;
+            color: #33691e;
+            line-height: 1.6;
+        }
+        .subq {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 1rem 0 8px 0;
+            color: var(--color-text-primary);
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-md);
+            padding: 10px;
+            font-size: 0.8rem;
+            font-family: var(--font-sans);
+            resize: vertical;
+            min-height: 80px;
+            background: var(--color-background-primary);
+            line-height: 1.5;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #1d9e75;
+        }
+        .char-c {
+            font-size: 0.7rem;
+            color: var(--color-text-secondary);
+            text-align: right;
+            margin-top: 4px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #0a3d1f;
+            color: #fff;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1.8rem;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .submit-btn:hover {
+            background: #1d9e75;
+        }
+        .result {
+            display: none;
+            padding: 1.5rem 0;
+        }
+        .result-head {
+            background: #0a3d1f;
+            color: #fff;
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .score-big {
+            font-size: 2.5rem;
+            font-weight: 500;
+        }
+        .rb {
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .rb-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-border-tertiary);
+            font-size: 0.85rem;
+        }
+        .detail-q {
+            font-size: 0.75rem;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--color-border-tertiary);
+            display: flex;
+            justify-content: space-between;
+        }
+        .ok-c {
+            color: #1d9e75;
+            font-weight: 500;
+        }
+        .ko-c {
+            color: #e24b4a;
+            font-weight: 500;
+        }
+        .email-box {
+            background: #e3f2fd;
+            border: 1px solid #185fa5;
+            border-radius: var(--border-radius-lg);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .send-mail-btn {
+            width: 100%;
+            padding: 12px;
+            background: #185fa5;
+            color: #fff;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .send-mail-btn:hover {
+            background: #0c447c;
+        }
+        .toast {
+            background: #e24b4a;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: var(--border-radius-md);
+            font-size: 0.75rem;
+            margin-bottom: 12px;
+            display: none;
+        }
+        textarea:disabled, input:disabled, .opt.disabled {
+            background-color: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .opt.disabled {
+            border-color: #ddd;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+<div class="exam">
+    <div class="toast" id="toast"></div>
+    <div class="cover">
+        <h1>Devoir de composition - Master Data Analyst</h1>
+        <h2>Ethique, Confidentialite et Gouvernance des Donnees | UAF Ex-IAM Ouagadougou</h2>
+        <div class="cover-meta">
+            <div class="meta-box"><label>Nom et prénom <span style="color:#ff8a80">*</span></label><input type="text" id="sname" placeholder="Votre nom complet…"></div>
+            <div class="meta-box"><label>Numéro étudiant <span style="color:#ff8a80">*</span></label><input type="text" id="sid" placeholder="Votre matricule"></div>
+            <div class="meta-box"><label>Email étudiant <span style="color:#ff8a80">*</span></label><input type="email" id="semail" placeholder="votre@email.com…"></div>
+            <div class="meta-box"><label>Durée & Total</label><div class="meta-val">1h45 & 70 points</div></div>
+        </div>
+    </div>
+
+    <div class="rules">
+        <strong>Consignes :</strong> 3 parties - QCM (40 pts, 1 pt par question), Analyse de cas (20 pts), Synthèse (10 pts). 
+        Le temps imparti est de <strong>1 heure 45 minutes (105 min)</strong>. Une fois le temps écoulé, les champs de saisie seront bloqués. 
+        Vous pourrez néanmoins soumettre les réponses déjà fournies. Toute réponse non saisie avant la fin du temps sera notée 0. 
+        Le copier-coller est interdit sur les zones de réponse et une detection d'usage de l'IA dans une reponse annule la reponse (0 point).
+    </div>
+
+    <div class="timer-box" id="timerDisplay">
+        <span> Temps restant :</span> <span id="countdown">01:45:00</span>
+    </div>
+
+    <div class="prog-wrap">
+        <div class="prog-lbl"><span id="plbl">0 / 46 questions répondues</span><span id="ppct">0%</span></div>
+        <div class="prog-bar"><div class="prog-fill" id="pfill"></div></div>
+    </div>
+
+    <div id="form-section">
+        <!-- PARTIE 1 - QCM (40 questions) -->
+        <div class="sec-title">Partie 1 - QCM <span class="sec-badge">40 pts &bull; 1 pt par question</span></div>
+        
+        <!-- Questions 1 à 20 (reprises du précédent) -->
+        <div class="qcard"><div class="qh"><div class="qn">1</div><div class="qt">Quelle est la définition correcte d'une donnée sensible selon le RGPD (Art. 9) ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q1" value="A"><span>A. Toute donnée stockée sur un serveur sécurisé</span></label>
+        <label class="opt"><input type="radio" name="q1" value="B"><span>B. Une donnée qui révèle l'origine raciale ou ethnique, les convictions religieuses, la santé ou l'orientation sexuelle</span></label>
+        <label class="opt"><input type="radio" name="q1" value="C"><span>C. Une donnée à caractère personnel collectée sans consentement</span></label>
+        <label class="opt"><input type="radio" name="q1" value="D"><span>D. Une donnée dont l'accès est protégé par un mot de passe</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">2</div><div class="qt">Le RGPD est entré en vigueur le :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q2" value="A"><span>A. 1er janvier 2016</span></label>
+        <label class="opt"><input type="radio" name="q2" value="B"><span>B. 25 mai 2018</span></label>
+        <label class="opt"><input type="radio" name="q2" value="C"><span>C. 14 juillet 2020</span></label>
+        <label class="opt"><input type="radio" name="q2" value="D"><span>D. 1er janvier 2022</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">3</div><div class="qt">Dans "L-F-M-E-C-I-R", que signifie la lettre M ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q3" value="A"><span>A. Mesurabilité des données</span></label>
+        <label class="opt"><input type="radio" name="q3" value="B"><span>B. Modernisation du traitement</span></label>
+        <label class="opt"><input type="radio" name="q3" value="C"><span>C. Minimisation des données collectées</span></label>
+        <label class="opt"><input type="radio" name="q3" value="D"><span>D. Migration sécurisée</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">4</div><div class="qt">Selon Kant, pourquoi la revente de données sans consentement est‑elle inacceptable ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q4" value="A"><span>A. Parce qu'elle réduit le bien-être collectif</span></label>
+        <label class="opt"><input type="radio" name="q4" value="B"><span>B. Parce qu'elle viole le principe de minimisation</span></label>
+        <label class="opt"><input type="radio" name="q4" value="C"><span>C. Parce qu'elle traite la personne comme un moyen et non comme une fin en soi</span></label>
+        <label class="opt"><input type="radio" name="q4" value="D"><span>D. Parce qu'elle est illégale dans tous les pays</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">5</div><div class="qt">Au Burkina Faso, quelle institution est chargée de la protection des données personnelles ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q5" value="A"><span>A. L'ARCEP</span></label>
+        <label class="opt"><input type="radio" name="q5" value="B"><span>B. La CIL (Commission de l'Informatique et des Libertés)</span></label>
+        <label class="opt"><input type="radio" name="q5" value="C"><span>C. Le CSC (Conseil Supérieur de la Communication)</span></label>
+        <label class="opt"><input type="radio" name="q5" value="D"><span>D. Le MEFP</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">6</div><div class="qt">Combien de bases légales l'article 6 du RGPD prévoit‑il ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q6" value="A"><span>A. 3 bases légales</span></label>
+        <label class="opt"><input type="radio" name="q6" value="B"><span>B. 5 bases légales</span></label>
+        <label class="opt"><input type="radio" name="q6" value="C"><span>C. 6 bases légales</span></label>
+        <label class="opt"><input type="radio" name="q6" value="D"><span>D. 9 bases légales</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">7</div><div class="qt">Le consentement RGPD valide doit impérativement être :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q7" value="A"><span>A. Écrit et notarié</span></label>
+        <label class="opt"><input type="radio" name="q7" value="B"><span>B. Libre, Spécifique, Éclairé et Univoque (L-S-E-U)</span></label>
+        <label class="opt"><input type="radio" name="q7" value="C"><span>C. Donné oralement devant témoin</span></label>
+        <label class="opt"><input type="radio" name="q7" value="D"><span>D. Enregistré dans un fichier PDF</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">8</div><div class="qt">Un biais algorithmique de type "feedback" se produit quand :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q8" value="A"><span>A. Les données d'entraînement ne représentent pas la population réelle</span></label>
+        <label class="opt"><input type="radio" name="q8" value="B"><span>B. Les prédictions du modèle influencent les futures données qui ré‑entraînent ce même modèle, créant une boucle auto‑renforçante</span></label>
+        <label class="opt"><input type="radio" name="q8" value="C"><span>C. Le modèle utilise une variable protégée comme l'âge ou le sexe</span></label>
+        <label class="opt"><input type="radio" name="q8" value="D"><span>D. L'ingénieur a des préjugés personnels</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">9</div><div class="qt">Le théorème de Chouldechova (2017) établit que :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q9" value="A"><span>A. Tout algorithme peut être rendu parfaitement équitable avec suffisamment de données</span></label>
+        <label class="opt"><input type="radio" name="q9" value="B"><span>B. Il est mathématiquement impossible de satisfaire simultanément plusieurs définitions de l'équité quand les taux de base diffèrent entre groupes</span></label>
+        <label class="opt"><input type="radio" name="q9" value="C"><span>C. Les biais algorithmiques sont toujours intentionnels</span></label>
+        <label class="opt"><input type="radio" name="q9" value="D"><span>D. Le machine learning est plus équitable que les décisions humaines</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">10</div><div class="qt">Dans l'AI Act (2024), dans quelle catégorie se situe un algorithme de crédit scoring ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q10" value="A"><span>A. Risque minimal - aucune obligation</span></label>
+        <label class="opt"><input type="radio" name="q10" value="B"><span>B. Risque inacceptable - interdit</span></label>
+        <label class="opt"><input type="radio" name="q10" value="C"><span>C. Risque élevé - obligations strictes (documentation, audit, contrôle humain)</span></label>
+        <label class="opt"><input type="radio" name="q10" value="D"><span>D. Risque limité - obligation de transparence uniquement</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">11</div><div class="qt">Quelle est la différence fondamentale entre anonymisation et pseudonymisation ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q11" value="A"><span>A. L'anonymisation est réservée aux hôpitaux</span></label>
+        <label class="opt"><input type="radio" name="q11" value="B"><span>B. L'anonymisation est irréversible et sort du champ du RGPD ; la pseudonymisation est réversible et reste dans le champ du RGPD</span></label>
+        <label class="opt"><input type="radio" name="q11" value="C"><span>C. L'anonymisation utilise des algorithmes, la pseudonymisation des formules mathématiques</span></label>
+        <label class="opt"><input type="radio" name="q11" value="D"><span>D. Il n'y a aucune différence légale entre les deux</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">12</div><div class="qt">La "Privacy by Default" signifie que :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q12" value="A"><span>A. La protection est configurée manuellement par l'utilisateur</span></label>
+        <label class="opt"><input type="radio" name="q12" value="B"><span>B. Les paramètres de confidentialité les plus protecteurs sont appliqués par défaut, sans action de l'utilisateur</span></label>
+        <label class="opt"><input type="radio" name="q12" value="C"><span>C. Les données sont chiffrées en transit uniquement</span></label>
+        <label class="opt"><input type="radio" name="q12" value="D"><span>D. L'entreprise demande un consentement pour chaque traitement</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">13</div><div class="qt">La gouvernance des données repose sur 4 piliers fondamentaux. Lesquels ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q13" value="A"><span>A. Sécurité, Conformité, Budget, Formation</span></label>
+        <label class="opt"><input type="radio" name="q13" value="B"><span>B. Personnes, Processus, Technologies et Données</span></label>
+        <label class="opt"><input type="radio" name="q13" value="C"><span>C. Cloud, IA, Big Data et Blockchain</span></label>
+        <label class="opt"><input type="radio" name="q13" value="D"><span>D. Direction, DSI, DPO et Data Analyst</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">14</div><div class="qt">Dans le modèle DCAM, qu'est‑ce qui caractérise le niveau 3 (Défini) ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q14" value="A"><span>A. Chaque équipe gère ses données indépendamment</span></label>
+        <label class="opt"><input type="radio" name="q14" value="B"><span>B. La gouvernance est entièrement automatisée par des outils IA</span></label>
+        <label class="opt"><input type="radio" name="q14" value="C"><span>C. La gouvernance est formalisée, les rôles sont identifiés et un registre est en place</span></label>
+        <label class="opt"><input type="radio" name="q14" value="D"><span>D. L'organisation est certifiée ISO 27001</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">15</div><div class="qt">En cas de violation de données, dans quel délai faut‑il notifier l'autorité de contrôle ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q15" value="A"><span>A. 24 heures</span></label>
+        <label class="opt"><input type="radio" name="q15" value="B"><span>B. 72 heures</span></label>
+        <label class="opt"><input type="radio" name="q15" value="C"><span>C. 7 jours</span></label>
+        <label class="opt"><input type="radio" name="q15" value="D"><span>D. 30 jours</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">16</div><div class="qt">La méthode LIME est utilisée pour :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q16" value="A"><span>A. Accélérer l'entraînement d'un modèle</span></label>
+        <label class="opt"><input type="radio" name="q16" value="B"><span>B. Expliquer une prédiction individuelle en approximant localement le modèle par un modèle simple</span></label>
+        <label class="opt"><input type="radio" name="q16" value="C"><span>C. Détecter les données manquantes</span></label>
+        <label class="opt"><input type="radio" name="q16" value="D"><span>D. Chiffrer les données sensibles</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">17</div><div class="qt">Le "Data Lineage" permet de :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q17" value="A"><span>A. Visualiser les performances d'un modèle IA</span></label>
+        <label class="opt"><input type="radio" name="q17" value="B"><span>B. Tracer le parcours d'une donnée depuis sa source jusqu'à son utilisation finale</span></label>
+        <label class="opt"><input type="radio" name="q17" value="C"><span>C. Générer de nouvelles données synthétiques</span></label>
+        <label class="opt"><input type="radio" name="q17" value="D"><span>D. Classer les données par niveau de confidentialité</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">18</div><div class="qt">La "Parité démographique" garantit que :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q18" value="A"><span>A. Le modèle a été entraîné sur autant de données pour chaque groupe</span></label>
+        <label class="opt"><input type="radio" name="q18" value="B"><span>B. Tous les groupes obtiennent le même taux de décisions positives de la part de l'algorithme</span></label>
+        <label class="opt"><input type="radio" name="q18" value="C"><span>C. Les erreurs sont aléatoirement réparties entre les groupes</span></label>
+        <label class="opt"><input type="radio" name="q18" value="D"><span>D. Aucun membre d'un groupe protégé n'est refusé</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">19</div><div class="qt">Dans l'affaire Cambridge Analytica, le principe RGPD le plus directement violé était :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q19" value="A"><span>A. Exactitude des données</span></label>
+        <label class="opt"><input type="radio" name="q19" value="B"><span>B. Limitation de conservation</span></label>
+        <label class="opt"><input type="radio" name="q19" value="C"><span>C. Limitation des finalités - les données collectées pour un quiz ont été utilisées à des fins politiques non déclarées</span></label>
+        <label class="opt"><input type="radio" name="q19" value="D"><span>D. Intégrité et confidentialité</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">20</div><div class="qt">Quel outil Python est spécialement conçu pour mesurer et mitiger les biais algorithmiques ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q20" value="A"><span>A. Pandas</span></label>
+        <label class="opt"><input type="radio" name="q20" value="B"><span>B. Fairlearn (Microsoft)</span></label>
+        <label class="opt"><input type="radio" name="q20" value="C"><span>C. Matplotlib</span></label>
+        <label class="opt"><input type="radio" name="q20" value="D"><span>D. Scikit-learn</span></label></div></div>
+        
+        <!-- Questions 21 à 40 (nouvelles) -->
+        <div class="qcard"><div class="qh"><div class="qn">21</div><div class="qt">Le principe de "minimisation des données" signifie :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q21" value="A"><span>A. On ne collecte que les données strictement nécessaires à la finalité</span></label>
+        <label class="opt"><input type="radio" name="q21" value="B"><span>B. On supprime les données après 1 an</span></label>
+        <label class="opt"><input type="radio" name="q21" value="C"><span>C. On anonymise toutes les données</span></label>
+        <label class="opt"><input type="radio" name="q21" value="D"><span>D. On utilise des bases de données légères</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">22</div><div class="qt">Le droit à l'oubli (Art. 17 RGPD) permet à une personne de demander :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q22" value="A"><span>A. La rectification de ses données</span></label>
+        <label class="opt"><input type="radio" name="q22" value="B"><span>B. L'effacement de ses données dans certaines conditions</span></label>
+        <label class="opt"><input type="radio" name="q22" value="C"><span>C. La portabilité de ses données</span></label>
+        <label class="opt"><input type="radio" name="q22" value="D"><span>D. L'opposition au marketing direct</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">23</div><div class="qt">Qu'est-ce que la "Privacy Impact Assessment" (PIA) ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q23" value="A"><span>A. Une analyse d'impact relative à la protection des données pour les traitements à risque</span></label>
+        <label class="opt"><input type="radio" name="q23" value="B"><span>B. Un audit de sécurité annuel</span></label>
+        <label class="opt"><input type="radio" name="q23" value="C"><span>C. Un formulaire de consentement</span></label>
+        <label class="opt"><input type="radio" name="q23" value="D"><span>D. Une certification ISO</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">24</div><div class="qt">Le rôle du DPO (Délégué à la Protection des Données) est :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q24" value="A"><span>A. Développer des algorithmes</span></label>
+        <label class="opt"><input type="radio" name="q24" value="B"><span>B. Veiller à la conformité RGPD, conseiller et contrôler</span></label>
+        <label class="opt"><input type="radio" name="q24" value="C"><span>C. Gérer les serveurs de données</span></label>
+        <label class="opt"><input type="radio" name="q24" value="D"><span>D. Remplacer le responsable légal</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">25</div><div class="qt">Un "Data Steward" est responsable :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q25" value="A"><span>A. De la stratégie globale des données</span></label>
+        <label class="opt"><input type="radio" name="q25" value="B"><span>B. De l'application quotidienne des règles de qualité et de gouvernance</span></label>
+        <label class="opt"><input type="radio" name="q25" value="C"><span>C. De la sécurité technique des données</span></label>
+        <label class="opt"><input type="radio" name="q25" value="D"><span>D. De la commercialisation des données</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">26</div><div class="qt">Dans le k-anonymat, plus la valeur de k est élevée :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q26" value="A"><span>A. Plus la protection est faible</span></label>
+        <label class="opt"><input type="radio" name="q26" value="B"><span>B. Plus la protection est forte</span></label>
+        <label class="opt"><input type="radio" name="q26" value="C"><span>C. Plus les données sont précises</span></label>
+        <label class="opt"><input type="radio" name="q26" value="D"><span>D. La protection est indépendante de k</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">27</div><div class="qt">L'utilitarisme (Bentham, Mill) justifierait un traitement de données si :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q27" value="A"><span>A. Le consentement est explicite</span></label>
+        <label class="opt"><input type="radio" name="q27" value="B"><span>B. Le bien-être collectif dépasse le risque individuel</span></label>
+        <label class="opt"><input type="radio" name="q27" value="C"><span>C. Les données sont anonymisées</span></label>
+        <label class="opt"><input type="radio" name="q27" value="D"><span>D. La personne est traitée comme une fin</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">28</div><div class="qt">La confidentialité différentielle (ε) : un ε petit procure :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q28" value="A"><span>A. Une protection faible et des résultats très précis</span></label>
+        <label class="opt"><input type="radio" name="q28" value="B"><span>B. Une protection forte mais des résultats moins précis</span></label>
+        <label class="opt"><input type="radio" name="q28" value="C"><span>C. Aucune protection</span></label>
+        <label class="opt"><input type="radio" name="q28" value="D"><span>D. Une protection identique quel que soit ε</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">29</div><div class="qt">La méthode SHAP pour l'explicabilité des modèles repose sur :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q29" value="A"><span>A. La théorie des jeux (valeur de Shapley)</span></label>
+        <label class="opt"><input type="radio" name="q29" value="B"><span>B. L'approximation linéaire locale</span></label>
+        <label class="opt"><input type="radio" name="q29" value="C"><span>C. Les arbres de décision</span></label>
+        <label class="opt"><input type="radio" name="q29" value="D"><span>D. Les réseaux de neurones profonds</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">30</div><div class="qt">Quel est le montant maximum d'une amende RGPD pour violation grave ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q30" value="A"><span>A. 10 M€ ou 2% du CA mondial</span></label>
+        <label class="opt"><input type="radio" name="q30" value="B"><span>B. 20 M€ ou 4% du CA mondial</span></label>
+        <label class="opt"><input type="radio" name="q30" value="C"><span>C. 50 M€</span></label>
+        <label class="opt"><input type="radio" name="q30" value="D"><span>D. 100 M€</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">31</div><div class="qt">La "portabilité des données" (Art. 20 RGPD) permet :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q31" value="A"><span>A. De supprimer ses données</span></label>
+        <label class="opt"><input type="radio" name="q31" value="B"><span>B. De recevoir ses données dans un format structuré et de les transmettre à un autre responsable</span></label>
+        <label class="opt"><input type="radio" name="q31" value="C"><span>C. De s'opposer au traitement</span></label>
+        <label class="opt"><input type="radio" name="q31" value="D"><span>D. De limiter le traitement</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">32</div><div class="qt">Dans le data lineage, qu'est-ce qu'on trace ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q32" value="A"><span>A. Les performances des requêtes SQL</span></label>
+        <label class="opt"><input type="radio" name="q32" value="B"><span>B. Le parcours complet d'une donnée de sa source à son utilisation finale</span></label>
+        <label class="opt"><input type="radio" name="q32" value="C"><span>C. Les logs de connexion des utilisateurs</span></label>
+        <label class="opt"><input type="radio" name="q32" value="D"><span>D. La qualité des données</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">33</div><div class="qt">Un biais algorithmique de "sélection" se caractérise par :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q33" value="A"><span>A. Des données d'entraînement qui ne représentent pas la population réelle</span></label>
+        <label class="opt"><input type="radio" name="q33" value="B"><span>B. Une variable proxy discriminante</span></label>
+        <label class="opt"><input type="radio" name="q33" value="C"><span>C. Une boucle de renforcement</span></label>
+        <label class="opt"><input type="radio" name="q33" value="D"><span>D. Une mesure imprécise</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">34</div><div class="qt">Le principe de "responsabilité" (accountability) dans le RGPD impose :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q34" value="A"><span>A. De nommer un DPO obligatoire</span></label>
+        <label class="opt"><input type="radio" name="q34" value="B"><span>B. De pouvoir prouver sa conformité par des documents</span></label>
+        <label class="opt"><input type="radio" name="q34" value="C"><span>C. De payer une assurance</span></label>
+        <label class="opt"><input type="radio" name="q34" value="D"><span>D. De publier toutes les données</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">35</div><div class="qt">Selon l'éthique du care (soin), la protection des données doit :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q35" value="A"><span>A. Maximiser le profit</span></label>
+        <label class="opt"><input type="radio" name="q35" value="B"><span>B. Favoriser les plus vulnérables</span></label>
+        <label class="opt"><input type="radio" name="q35" value="C"><span>C. Respecter strictement la loi</span></label>
+        <label class="opt"><input type="radio" name="q35" value="D"><span>D. Utiliser l'intelligence artificielle</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">36</div><div class="qt">La norme ISO 27701 porte sur :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q36" value="A"><span>A. La gestion de la sécurité de l'information</span></label>
+        <label class="opt"><input type="radio" name="q36" value="B"><span>B. La protection des données privées (extension de l'ISO 27001)</span></label>
+        <label class="opt"><input type="radio" name="q36" value="C"><span>C. La qualité des logiciels</span></label>
+        <label class="opt"><input type="radio" name="q36" value="D"><span>D. Le cloud computing</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">37</div><div class="qt">Qu'est-ce que la "l‑diversité" ?<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q37" value="A"><span>A. Une technique pour diversifier les données d'entraînement</span></label>
+        <label class="opt"><input type="radio" name="q37" value="B"><span>B. Une extension du k-anonymat pour éviter l'attaque par homogénéité</span></label>
+        <label class="opt"><input type="radio" name="q37" value="C"><span>C. Une méthode de chiffrement</span></label>
+        <label class="opt"><input type="radio" name="q37" value="D"><span>D. Une mesure de performance des algorithmes</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">38</div><div class="qt">Le Data Owner est :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q38" value="A"><span>A. Le responsable technique des serveurs</span></label>
+        <label class="opt"><input type="radio" name="q38" value="B"><span>B. Le responsable métier d'un domaine de données</span></label>
+        <label class="opt"><input type="radio" name="q38" value="C"><span>C. L'administrateur de bases de données</span></label>
+        <label class="opt"><input type="radio" name="q38" value="D"><span>D. Le consultant externe en données</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">39</div><div class="qt">La CIL du Burkina Faso a été créée par :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q39" value="A"><span>A. Loi n°010-2004/AN</span></label>
+        <label class="opt"><input type="radio" name="q39" value="B"><span>B. Loi 2008-12</span></label>
+        <label class="opt"><input type="radio" name="q39" value="C"><span>C. Loi 2013-450</span></label>
+        <label class="opt"><input type="radio" name="q39" value="D"><span>D. Loi 2017-20</span></label></div></div>
+        
+        <div class="qcard"><div class="qh"><div class="qn">40</div><div class="qt">Le "principe de proportionnalité" dans la gouvernance des données impose :<span class="pts">(1 pt)</span></div></div>
+        <div class="opts"><label class="opt"><input type="radio" name="q40" value="A"><span>A. D'utiliser des supercalculateurs</span></label>
+        <label class="opt"><input type="radio" name="q40" value="B"><span>B. D'adapter les mesures de sécurité au niveau de risque</span></label>
+        <label class="opt"><input type="radio" name="q40" value="C"><span>C. De collecter le maximum de données possible</span></label>
+        <label class="opt"><input type="radio" name="q40" value="D"><span>D. De conserver les données à vie</span></label></div></div>
+        
+        <!-- PARTIE 2 - ANALYSE DE CAS -->
+        <div class="sec-title">Partie 2 - Analyse de cas <span class="sec-badge">20 pts</span></div>
+        <div class="qcard">
+            <div class="qh"><div class="qn">41</div><div class="qt">Lisez attentivement le scénario puis répondez aux 5 questions.<span class="pts">(20 pts)</span></div></div>
+            <div class="scenario"><strong>Scénario - HealthApp Burkina :</strong> Une startup burkinabé développe une application mobile de suivi de santé. Elle collecte : prénom, date de naissance, poids, tension artérielle, localisation GPS, et les contacts du téléphone. L'application est gratuite. En échange, les données de santé sont partagées avec un laboratoire pharmaceutique français sans que les utilisateurs en soient informés. Le consentement obtenu lors de l'inscription est une case à cocher globale "J'accepte les conditions générales". L'application est téléchargée par 45 000 Burkinabé, dont 3 000 ont un compte sur un site européen partenaire.</div>
+            <div class="subq">Q41-A - Quels types de données collectées sont des "données sensibles" selon l'Art. 9 du RGPD ? Justifiez. <span class="pts">(4 pts)</span></div>
+            <textarea id="q41a" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41a','c41a')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c41a">0</span> caractères</div>
+            <div class="subq">Q41-B - Le consentement obtenu est‑il valide au sens du RGPD ? Analysez‑le au regard des critères L‑S‑E‑U. <span class="pts">(5 pts)</span></div>
+            <textarea id="q41b" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41b','c41b')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c41b">0</span> caractères</div>
+            <div class="subq">Q41-C - Le RGPD s'applique‑t‑il à cette startup burkinabé ? Justifiez en citant le principe pertinent. <span class="pts">(3 pts)</span></div>
+            <textarea id="q41c" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41c','c41c')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c41c">0</span> caractères</div>
+            <div class="subq">Q41-D - Identifiez TROIS principes RGPD (L‑F‑M‑E‑C‑I‑R) violés. Pour chacun, citez un fait précis du scénario. <span class="pts">(6 pts)</span></div>
+            <textarea id="q41d" placeholder="Principe 1 : … - Fait : …&#10;Principe 2 : … - Fait : …&#10;Principe 3 : … - Fait : …" onkeyup="cc('q41d','c41d')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c41d">0</span> caractères</div>
+            <div class="subq">Q41-E - Sous quel angle philosophique analyseriez‑vous le partage des données avec le laboratoire ? Nommez le courant et concluez. <span class="pts">(2 pts)</span></div>
+            <textarea id="q41e" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41e','c41e')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c41e">0</span> caractères</div>
+        </div>
+
+        <!-- PARTIE 3 - SYNTHESE -->
+        <div class="sec-title">Partie 3 - Synthèse personnelle <span class="sec-badge">10 pts</span></div>
+        <div class="qcard">
+            <div class="qh"><div class="qn">42</div><div class="qt">En tant que futur(e) Data Analyst, expliquez en quoi l'éthique de la donnée est une responsabilité professionnelle personnelle et pas seulement une obligation légale. Appuyez votre développement sur au moins deux exemples concrets tirés du cours. <span class="pts">(10 pts)</span></div></div>
+            <textarea id="q42" style="min-height:130px" placeholder="Développez votre réflexion personnelle ici…" onkeyup="cc('q42','c42')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <div class="char-c"><span id="c42">0</span> caractères</div>
+        </div>
+
+        <button class="submit-btn" id="sbtn" onclick="doSubmit()"> Soumettre mon devoir</button>
+    </div>
+
+    <div class="result" id="result-screen">
+        <div class="result-head">
+            <div style="font-size:0.8rem; color:#9fe1cb; margin-bottom:4px" id="res-name"></div>
+            <div class="score-big" id="res-score">- / 40</div>
+            <div class="score-sub">Score automatique Partie 1 (QCM)</div>
+        </div>
+        <div class="rb">
+            <div class="rb-row"><span>Partie 1 - QCM (40 questions)</span><span id="rb1" style="font-weight:500">- / 40 pts</span></div>
+            <div class="rb-row"><span>Partie 2 - Analyse de cas</span><span style="color:var(--color-text-secondary)">Correction enseignant</span></div>
+            <div class="rb-row"><span>Partie 3 - Synthèse personnelle</span><span style="color:var(--color-text-secondary)">Correction enseignant</span></div>
+            <div class="rb-row" style="font-weight:500"><span>Total actuel (QCM)</span><span id="rb2">- / 40 pts</span></div>
+        </div>
+        <div id="qcm-det" style="margin-bottom:1rem"></div>
+        <div class="email-box">
+            <p><strong style="color:#042c53">Étape finale - Envoi à l'enseignant</strong><br>
+            Cliquez sur le bouton ci-dessous. Votre messagerie (Gmail, Outlook…) va s'ouvrir avec toutes vos réponses pré‑remplies, prête à envoyer à <strong>asomabf@gmail.com</strong>.<br>
+            Il vous suffit de cliquer sur <strong>Envoyer</strong> dans votre messagerie.</p>
+            <button class="send-mail-btn" onclick="openMailto()"> Ouvrir ma messagerie et envoyer à M. SOMA</button>
+            <div class="sent-confirm" id="sent-ok" style="display:none; background:#e1f5ee; border-radius:8px; padding:10px; margin-top:10px; font-size:0.75rem; color:#085041;">✅ Votre messagerie a été ouverte. Vérifiez que l'email est bien envoyé à asomabf@gmail.com puis cliquez sur Envoyer.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ------------------------- CORRECTIONS QCM (40 réponses) -------------------------
+    const ANS = {
+        q1:'B', q2:'B', q3:'C', q4:'C', q5:'B', q6:'C', q7:'B', q8:'B', q9:'B', q10:'C',
+        q11:'B', q12:'B', q13:'B', q14:'C', q15:'B', q16:'B', q17:'B', q18:'B', q19:'C', q20:'B',
+        q21:'A', q22:'B', q23:'A', q24:'B', q25:'B', q26:'B', q27:'B', q28:'B', q29:'A', q30:'B',
+        q31:'B', q32:'B', q33:'A', q34:'B', q35:'B', q36:'B', q37:'B', q38:'B', q39:'A', q40:'B'
+    };
+
+    let mailBody = '';
+    let isExpired = false;
+    let timerInterval = null;
+    const DURATION_MINUTES = 105;
+    const DURATION_MS = DURATION_MINUTES * 60 * 1000;
+
+    function cc(id, counterId) {
+        const val = document.getElementById(id).value;
+        document.getElementById(counterId).innerText = val.length;
+        updateProg();
+    }
+
+    function updateProg() {
+        let answered = 0;
+        for (let i = 1; i <= 40; i++) {
+            if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+        }
+        const textareas = ['q41a','q41b','q41c','q41d','q41e','q42'];
+        for (let id of textareas) {
+            const el = document.getElementById(id);
+            if (el && el.value.trim().length > 2) answered++;
+        }
+        const total = 46;
+        const percent = Math.round((answered / total) * 100);
+        document.getElementById('pfill').style.width = percent + '%';
+        document.getElementById('plbl').innerText = answered + ' / ' + total + ' questions répondues';
+        document.getElementById('ppct').innerText = percent + '%';
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 3500);
+    }
+
+    function g(id) { return (document.getElementById(id) || {}).value || ''; }
+
+    function disableAllInputs() {
+        document.getElementById('sname').disabled = true;
+        document.getElementById('sid').disabled = true;
+        document.getElementById('semail').disabled = true;
+        const allRadios = document.querySelectorAll('input[type="radio"]');
+        allRadios.forEach(r => r.disabled = true);
+        const allTextareas = document.querySelectorAll('textarea');
+        allTextareas.forEach(ta => ta.disabled = true);
+        document.querySelectorAll('.opt').forEach(opt => opt.classList.add('disabled'));
+    }
+
+    function initTimer() {
+        let startTime = sessionStorage.getItem('exam_start_time');
+        if (!startTime) {
+            startTime = Date.now();
+            sessionStorage.setItem('exam_start_time', startTime);
+        } else {
+            startTime = parseInt(startTime, 10);
+        }
+
+        const updateTimerDisplay = () => {
+            const now = Date.now();
+            let remaining = DURATION_MS - (now - startTime);
+            if (remaining <= 0) {
+                remaining = 0;
+                if (!isExpired) {
+                    isExpired = true;
+                    disableAllInputs();
+                    const timerBox = document.getElementById('timerDisplay');
+                    timerBox.classList.add('warning');
+                    timerBox.innerHTML = '<span> TEMPS ÉCOULÉ</span><span>Vous ne pouvez plus modifier vos réponses. Cliquez sur "Soumettre".</span>';
+                    if (timerInterval) clearInterval(timerInterval);
+                }
+            }
+            const hours = Math.floor(remaining / 3600000);
+            const mins = Math.floor((remaining % 3600000) / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+            document.getElementById('countdown').innerText = `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            if (remaining <= 300000 && remaining > 0 && !isExpired) {
+                document.getElementById('timerDisplay').classList.add('warning');
+            }
+        };
+
+        updateTimerDisplay();
+        timerInterval = setInterval(updateTimerDisplay, 1000);
+    }
+
+    function doSubmit() {
+        const name = g('sname').trim();
+        const sid = g('sid').trim();
+        const semail = g('semail').trim();
+
+        if (!name || !sid || !semail.includes('@')) {
+            showToast('Veuillez remplir nom, numéro étudiant et email valide.');
+            return;
+        }
+
+        let missing = [];
+        for (let i=1; i<=40; i++) if (!document.querySelector(`input[name="q${i}"]:checked`)) missing.push(`Q${i}`);
+        const textIds = ['q41a','q41b','q41c','q41d','q41e','q42'];
+        for (let id of textIds) {
+            const el = document.getElementById(id);
+            if (!el || el.value.trim().length < 2) missing.push(id.toUpperCase());
+        }
+        if (missing.length > 0 && !isExpired) {
+            showToast(`Questions incomplètes : ${missing.slice(0,4).join(', ')}${missing.length>4 ? ` et ${missing.length-4} autres` : ''}`);
+            return;
+        }
+
+        let score = 0;
+        let details = [];
+        for (let i=1; i<=40; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const answer = selected ? selected.value : null;
+            const correct = (answer === ANS[`q${i}`]);
+            if (correct) score += 1;
+            details.push({ num: i, correct, answer, expected: ANS[`q${i}`] });
+        }
+
+        const qcmLines = details.map(d => `Q${d.num} : ${d.answer || 'aucune'} [${d.correct ? 'CORRECT' : 'INCORRECT (attendu '+d.expected+')'}]`).join('\n');
+
+        mailBody = [
+            '=== DEVOIR MASTER DATA ANALYST — UAF EX-IAM ===',
+            'Ethique, Confidentialite et Gouvernance des Donnees',
+            '',
+            '--- INFORMATIONS ETUDIANT ---',
+            `Nom et prénom : ${name}`,
+            `Numéro étudiant : ${sid}`,
+            `Email étudiant : ${semail}`,
+            `Score QCM automatique : ${score} / 40 pts`,
+            '',
+            '--- PARTIE 1 : QCM (40 pts) ---',
+            qcmLines,
+            '',
+            '--- PARTIE 2 : ANALYSE DE CAS (20 pts) ---',
+            '',
+            'Q41-A (Données sensibles — 4 pts) :',
+            document.getElementById('q41a').value || '[Sans réponse]',
+            '',
+            'Q41-B (Consentement LSEU — 5 pts) :',
+            document.getElementById('q41b').value || '[Sans réponse]',
+            '',
+            'Q41-C (Application RGPD — 3 pts) :',
+            document.getElementById('q41c').value || '[Sans réponse]',
+            '',
+            'Q41-D (3 principes violés — 6 pts) :',
+            document.getElementById('q41d').value || '[Sans réponse]',
+            '',
+            'Q41-E (Analyse philosophique — 2 pts) :',
+            document.getElementById('q41e').value || '[Sans réponse]',
+            '',
+            '--- PARTIE 3 : SYNTHESE PERSONNELLE (10 pts) ---',
+            '',
+            'Q42 (Responsabilité éthique — 10 pts) :',
+            document.getElementById('q42').value || '[Sans réponse]',
+            '',
+            '=== FIN DU DEVOIR ==='
+        ].join('\n');
+
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('res-name').innerHTML = `${name} — ${sid}`;
+        document.getElementById('res-score').innerHTML = score + ' / 40';
+        document.getElementById('rb1').innerHTML = score + ' / 40 pts';
+        document.getElementById('rb2').innerHTML = score + ' / 40 pts';
+
+        const detDiv = document.getElementById('qcm-det');
+        detDiv.innerHTML = '<div style="font-size:0.75rem; font-weight:600; margin-bottom:8px;">Détail du QCM :</div>';
+        details.forEach(d => {
+            detDiv.innerHTML += `<div class="detail-q"><span>Question ${d.num}</span><span class="${d.correct ? 'ok-c' : 'ko-c'}">${d.correct ? 'Correct' : 'Incorrect — attendu : ' + d.expected}</span></div>`;
+        });
+        window.scrollTo(0,0);
+    }
+
+    function openMailto() {
+        const name = g('sname').trim();
+        const sid = g('sid').trim();
+        const subject = encodeURIComponent(`Devoir M. Data Analyst — ${name} (${sid})`);
+        let body = mailBody;
+        if (body.length > 1800) body = body.substring(0, 1800) + '\n... [Corps tronqué, veuillez copier-coller manuellement depuis votre devoir]';
+        const bodyEnc = encodeURIComponent(body);
+        window.location.href = `mailto:asomabf@gmail.com?subject=${subject}&body=${bodyEnc}`;
+        document.getElementById('sent-ok').style.display = 'block';
+    }
+
+    // Gestionnaires d'événements pour la sélection visuelle et anti-copie
+    document.querySelectorAll('.opt').forEach(opt => {
+        const radio = opt.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                document.querySelectorAll(`.opt input[name="${name}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
+                if (this.checked) this.closest('.opt').classList.add('sel');
+                updateProg();
+            });
+        }
+    });
+
+    const textAreas = document.querySelectorAll('textarea');
+    textAreas.forEach(ta => {
+        ta.addEventListener('copy', (e) => e.preventDefault());
+        ta.addEventListener('cut', (e) => e.preventDefault());
+        ta.addEventListener('paste', (e) => e.preventDefault());
+    });
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') e.preventDefault();
+    });
+    document.addEventListener('keydown', (e) => {
+        const tag = e.target.tagName;
+        if ((e.ctrlKey || e.metaKey) && ['c','x','a'].includes(e.key.toLowerCase()) && (tag === 'TEXTAREA' || tag === 'INPUT')) {
+            e.preventDefault();
+        }
+    });
+
+    initTimer();
+</script>
+</body>
+</html>
