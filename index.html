@@ -102,12 +102,10 @@
             padding: 10px 16px;
             font-size: 0.9rem;
             font-weight: 500;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 1.2rem;
-            width: 100%;
             justify-content: space-between;
+            margin-bottom: 1.2rem;
         }
         .timer-box.warning {
             background: #e24b4a;
@@ -204,7 +202,7 @@
         }
         .opt {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 10px;
             padding: 8px 12px;
             border: 1px solid var(--color-border-tertiary);
@@ -224,7 +222,7 @@
         }
         .opt input {
             accent-color: #1d9e75;
-            margin-top: 2px;
+            margin-top: 0;
         }
         .scenario {
             background: #f9fbe7;
@@ -295,38 +293,6 @@
             text-align: center;
             margin-bottom: 1rem;
         }
-        .score-big {
-            font-size: 2.5rem;
-            font-weight: 500;
-        }
-        .rb {
-            background: var(--color-background-secondary);
-            border-radius: var(--border-radius-lg);
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .rb-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--color-border-tertiary);
-            font-size: 0.85rem;
-        }
-        .detail-q {
-            font-size: 0.75rem;
-            padding: 6px 0;
-            border-bottom: 1px solid var(--color-border-tertiary);
-            display: flex;
-            justify-content: space-between;
-        }
-        .ok-c {
-            color: #1d9e75;
-            font-weight: 500;
-        }
-        .ko-c {
-            color: #e24b4a;
-            font-weight: 500;
-        }
         .email-box {
             background: #e3f2fd;
             border: 1px solid #185fa5;
@@ -392,7 +358,7 @@
         <strong>Consignes :</strong> 3 parties - QCM (40 pts, 1 pt par question), Analyse de cas (20 pts), Synthèse (10 pts). 
         Le temps imparti est de <strong>1 heure 45 minutes (105 min)</strong>. Une fois le temps écoulé, les champs de saisie seront bloqués. 
         Vous pourrez néanmoins soumettre les réponses déjà fournies. Toute réponse non saisie avant la fin du temps sera notée 0. 
-        Le copier-coller est interdit sur les zones de réponse et une detection d'usage de l'IA dans une reponse annule la reponse (0 point).
+        Le copier-coller est interdit sur les zones de réponse.
     </div>
 
     <div class="timer-box" id="timerDisplay">
@@ -408,7 +374,7 @@
         <!-- PARTIE 1 - QCM (40 questions) -->
         <div class="sec-title">Partie 1 - QCM <span class="sec-badge">40 pts &bull; 1 pt par question</span></div>
         
-        <!-- Questions 1 à 20 (reprises du précédent) -->
+        <!-- Questions 1 à 20 -->
         <div class="qcard"><div class="qh"><div class="qn">1</div><div class="qt">Quelle est la définition correcte d'une donnée sensible selon le RGPD (Art. 9) ?<span class="pts">(1 pt)</span></div></div>
         <div class="opts"><label class="opt"><input type="radio" name="q1" value="A"><span>A. Toute donnée stockée sur un serveur sécurisé</span></label>
         <label class="opt"><input type="radio" name="q1" value="B"><span>B. Une donnée qui révèle l'origine raciale ou ethnique, les convictions religieuses, la santé ou l'orientation sexuelle</span></label>
@@ -529,7 +495,7 @@
         <label class="opt"><input type="radio" name="q20" value="C"><span>C. Matplotlib</span></label>
         <label class="opt"><input type="radio" name="q20" value="D"><span>D. Scikit-learn</span></label></div></div>
         
-        <!-- Questions 21 à 40 (nouvelles) -->
+        <!-- Questions 21 à 40 -->
         <div class="qcard"><div class="qh"><div class="qn">21</div><div class="qt">Le principe de "minimisation des données" signifie :<span class="pts">(1 pt)</span></div></div>
         <div class="opts"><label class="opt"><input type="radio" name="q21" value="A"><span>A. On ne collecte que les données strictement nécessaires à la finalité</span></label>
         <label class="opt"><input type="radio" name="q21" value="B"><span>B. On supprime les données après 1 an</span></label>
@@ -656,19 +622,19 @@
             <div class="qh"><div class="qn">41</div><div class="qt">Lisez attentivement le scénario puis répondez aux 5 questions.<span class="pts">(20 pts)</span></div></div>
             <div class="scenario"><strong>Scénario - HealthApp Burkina :</strong> Une startup burkinabé développe une application mobile de suivi de santé. Elle collecte : prénom, date de naissance, poids, tension artérielle, localisation GPS, et les contacts du téléphone. L'application est gratuite. En échange, les données de santé sont partagées avec un laboratoire pharmaceutique français sans que les utilisateurs en soient informés. Le consentement obtenu lors de l'inscription est une case à cocher globale "J'accepte les conditions générales". L'application est téléchargée par 45 000 Burkinabé, dont 3 000 ont un compte sur un site européen partenaire.</div>
             <div class="subq">Q41-A - Quels types de données collectées sont des "données sensibles" selon l'Art. 9 du RGPD ? Justifiez. <span class="pts">(4 pts)</span></div>
-            <textarea id="q41a" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41a','c41a')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q41a" placeholder="Rédigez votre réponse ici…" onkeyup="updateCharCount('q41a','c41a'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c41a">0</span> caractères</div>
             <div class="subq">Q41-B - Le consentement obtenu est‑il valide au sens du RGPD ? Analysez‑le au regard des critères L‑S‑E‑U. <span class="pts">(5 pts)</span></div>
-            <textarea id="q41b" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41b','c41b')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q41b" placeholder="Rédigez votre réponse ici…" onkeyup="updateCharCount('q41b','c41b'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c41b">0</span> caractères</div>
             <div class="subq">Q41-C - Le RGPD s'applique‑t‑il à cette startup burkinabé ? Justifiez en citant le principe pertinent. <span class="pts">(3 pts)</span></div>
-            <textarea id="q41c" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41c','c41c')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q41c" placeholder="Rédigez votre réponse ici…" onkeyup="updateCharCount('q41c','c41c'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c41c">0</span> caractères</div>
             <div class="subq">Q41-D - Identifiez TROIS principes RGPD (L‑F‑M‑E‑C‑I‑R) violés. Pour chacun, citez un fait précis du scénario. <span class="pts">(6 pts)</span></div>
-            <textarea id="q41d" placeholder="Principe 1 : … - Fait : …&#10;Principe 2 : … - Fait : …&#10;Principe 3 : … - Fait : …" onkeyup="cc('q41d','c41d')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q41d" placeholder="Principe 1 : … - Fait : …&#10;Principe 2 : … - Fait : …&#10;Principe 3 : … - Fait : …" onkeyup="updateCharCount('q41d','c41d'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c41d">0</span> caractères</div>
             <div class="subq">Q41-E - Sous quel angle philosophique analyseriez‑vous le partage des données avec le laboratoire ? Nommez le courant et concluez. <span class="pts">(2 pts)</span></div>
-            <textarea id="q41e" placeholder="Rédigez votre réponse ici…" onkeyup="cc('q41e','c41e')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q41e" placeholder="Rédigez votre réponse ici…" onkeyup="updateCharCount('q41e','c41e'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c41e">0</span> caractères</div>
         </div>
 
@@ -676,63 +642,49 @@
         <div class="sec-title">Partie 3 - Synthèse personnelle <span class="sec-badge">10 pts</span></div>
         <div class="qcard">
             <div class="qh"><div class="qn">42</div><div class="qt">En tant que futur(e) Data Analyst, expliquez en quoi l'éthique de la donnée est une responsabilité professionnelle personnelle et pas seulement une obligation légale. Appuyez votre développement sur au moins deux exemples concrets tirés du cours. <span class="pts">(10 pts)</span></div></div>
-            <textarea id="q42" style="min-height:130px" placeholder="Développez votre réflexion personnelle ici…" onkeyup="cc('q42','c42')" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            <textarea id="q42" style="min-height:130px" placeholder="Développez votre réflexion personnelle ici…" onkeyup="updateCharCount('q42','c42'); updateProgress()" oncopy="return false" oncut="return false" onpaste="return false"></textarea>
             <div class="char-c"><span id="c42">0</span> caractères</div>
         </div>
 
-        <button class="submit-btn" id="sbtn" onclick="doSubmit()"> Soumettre mon devoir</button>
+        <button class="submit-btn" id="sbtn" onclick="submitExam()"> Soumettre mon devoir</button>
     </div>
 
     <div class="result" id="result-screen">
         <div class="result-head">
-            <div style="font-size:0.8rem; color:#9fe1cb; margin-bottom:4px" id="res-name"></div>
-            <div class="score-big" id="res-score">- / 40</div>
-            <div class="score-sub">Score automatique Partie 1 (QCM)</div>
+            <div style="font-size:0.9rem; margin-bottom:4px" id="res-name"></div>
+            <p>Votre devoir a été enregistré.</p>
         </div>
-        <div class="rb">
-            <div class="rb-row"><span>Partie 1 - QCM (40 questions)</span><span id="rb1" style="font-weight:500">- / 40 pts</span></div>
-            <div class="rb-row"><span>Partie 2 - Analyse de cas</span><span style="color:var(--color-text-secondary)">Correction enseignant</span></div>
-            <div class="rb-row"><span>Partie 3 - Synthèse personnelle</span><span style="color:var(--color-text-secondary)">Correction enseignant</span></div>
-            <div class="rb-row" style="font-weight:500"><span>Total actuel (QCM)</span><span id="rb2">- / 40 pts</span></div>
-        </div>
-        <div id="qcm-det" style="margin-bottom:1rem"></div>
         <div class="email-box">
             <p><strong style="color:#042c53">Étape finale - Envoi à l'enseignant</strong><br>
-            Cliquez sur le bouton ci-dessous. Votre messagerie (Gmail, Outlook…) va s'ouvrir avec toutes vos réponses pré‑remplies, prête à envoyer à <strong>asomabf@gmail.com</strong>.<br>
+            Cliquez sur le bouton ci-dessous. Votre messagerie s'ouvrira avec toutes vos réponses pré‑remplies, prête à envoyer à <strong>asomabf@gmail.com</strong>.<br>
             Il vous suffit de cliquer sur <strong>Envoyer</strong> dans votre messagerie.</p>
-            <button class="send-mail-btn" onclick="openMailto()"> Ouvrir ma messagerie et envoyer à M. SOMA</button>
-            <div class="sent-confirm" id="sent-ok" style="display:none; background:#e1f5ee; border-radius:8px; padding:10px; margin-top:10px; font-size:0.75rem; color:#085041;">✅ Votre messagerie a été ouverte. Vérifiez que l'email est bien envoyé à asomabf@gmail.com puis cliquez sur Envoyer.</div>
+            <button class="send-mail-btn" onclick="sendEmail()"> Ouvrir ma messagerie et envoyer à M. SOMA</button>
+            <div class="sent-confirm" id="sent-ok" style="display:none;"> Votre messagerie a été ouverte. Vérifiez l'envoi.</div>
         </div>
     </div>
 </div>
 
 <script>
-    // ------------------------- CORRECTIONS QCM (40 réponses) -------------------------
-    const ANS = {
-        q1:'B', q2:'B', q3:'C', q4:'C', q5:'B', q6:'C', q7:'B', q8:'B', q9:'B', q10:'C',
-        q11:'B', q12:'B', q13:'B', q14:'C', q15:'B', q16:'B', q17:'B', q18:'B', q19:'C', q20:'B',
-        q21:'A', q22:'B', q23:'A', q24:'B', q25:'B', q26:'B', q27:'B', q28:'B', q29:'A', q30:'B',
-        q31:'B', q32:'B', q33:'A', q34:'B', q35:'B', q36:'B', q37:'B', q38:'B', q39:'A', q40:'B'
-    };
-
+    // Variables globales
     let mailBody = '';
     let isExpired = false;
     let timerInterval = null;
     const DURATION_MINUTES = 105;
     const DURATION_MS = DURATION_MINUTES * 60 * 1000;
 
-    function cc(id, counterId) {
-        const val = document.getElementById(id).value;
-        document.getElementById(counterId).innerText = val.length;
-        updateProg();
+    // Comptage de caractères
+    function updateCharCount(textareaId, spanId) {
+        const val = document.getElementById(textareaId).value;
+        document.getElementById(spanId).innerText = val.length;
     }
 
-    function updateProg() {
+    // Mise à jour de la barre de progression
+    function updateProgress() {
         let answered = 0;
         for (let i = 1; i <= 40; i++) {
             if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
         }
-        const textareas = ['q41a','q41b','q41c','q41d','q41e','q42'];
+        const textareas = ['q41a', 'q41b', 'q41c', 'q41d', 'q41e', 'q42'];
         for (let id of textareas) {
             const el = document.getElementById(id);
             if (el && el.value.trim().length > 2) answered++;
@@ -744,6 +696,7 @@
         document.getElementById('ppct').innerText = percent + '%';
     }
 
+    // Notification
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.textContent = msg;
@@ -751,8 +704,9 @@
         setTimeout(() => t.style.display = 'none', 3500);
     }
 
-    function g(id) { return (document.getElementById(id) || {}).value || ''; }
+    function getField(id) { return (document.getElementById(id) || {}).value || ''; }
 
+    // Désactivation après expiration
     function disableAllInputs() {
         document.getElementById('sname').disabled = true;
         document.getElementById('sid').disabled = true;
@@ -764,6 +718,7 @@
         document.querySelectorAll('.opt').forEach(opt => opt.classList.add('disabled'));
     }
 
+    // Timer
     function initTimer() {
         let startTime = sessionStorage.getItem('exam_start_time');
         if (!startTime) {
@@ -790,49 +745,49 @@
             const hours = Math.floor(remaining / 3600000);
             const mins = Math.floor((remaining % 3600000) / 60000);
             const secs = Math.floor((remaining % 60000) / 1000);
-            document.getElementById('countdown').innerText = `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            document.getElementById('countdown').innerText = `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             if (remaining <= 300000 && remaining > 0 && !isExpired) {
                 document.getElementById('timerDisplay').classList.add('warning');
             }
         };
-
         updateTimerDisplay();
         timerInterval = setInterval(updateTimerDisplay, 1000);
     }
 
-    function doSubmit() {
-        const name = g('sname').trim();
-        const sid = g('sid').trim();
-        const semail = g('semail').trim();
+    // Soumission
+    function submitExam() {
+        const name = getField('sname').trim();
+        const sid = getField('sid').trim();
+        const semail = getField('semail').trim();
 
         if (!name || !sid || !semail.includes('@')) {
             showToast('Veuillez remplir nom, numéro étudiant et email valide.');
             return;
         }
 
+        // Vérification des réponses incomplètes
         let missing = [];
-        for (let i=1; i<=40; i++) if (!document.querySelector(`input[name="q${i}"]:checked`)) missing.push(`Q${i}`);
-        const textIds = ['q41a','q41b','q41c','q41d','q41e','q42'];
+        for (let i = 1; i <= 40; i++) {
+            if (!document.querySelector(`input[name="q${i}"]:checked`)) missing.push(`Q${i}`);
+        }
+        const textIds = ['q41a', 'q41b', 'q41c', 'q41d', 'q41e', 'q42'];
         for (let id of textIds) {
             const el = document.getElementById(id);
             if (!el || el.value.trim().length < 2) missing.push(id.toUpperCase());
         }
         if (missing.length > 0 && !isExpired) {
-            showToast(`Questions incomplètes : ${missing.slice(0,4).join(', ')}${missing.length>4 ? ` et ${missing.length-4} autres` : ''}`);
+            showToast(`Questions incomplètes : ${missing.slice(0, 4).join(', ')}${missing.length > 4 ? ` et ${missing.length - 4} autres` : ''}`);
             return;
         }
 
-        let score = 0;
-        let details = [];
-        for (let i=1; i<=40; i++) {
+        // Collecte des réponses QCM (sans aucune correction)
+        let qcmAnswers = [];
+        for (let i = 1; i <= 40; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
-            const answer = selected ? selected.value : null;
-            const correct = (answer === ANS[`q${i}`]);
-            if (correct) score += 1;
-            details.push({ num: i, correct, answer, expected: ANS[`q${i}`] });
+            const answer = selected ? selected.value : 'aucune';
+            qcmAnswers.push(`Q${i} : ${answer}`);
         }
-
-        const qcmLines = details.map(d => `Q${d.num} : ${d.answer || 'aucune'} [${d.correct ? 'CORRECT' : 'INCORRECT (attendu '+d.expected+')'}]`).join('\n');
+        const qcmLines = qcmAnswers.join('\n');
 
         mailBody = [
             '=== DEVOIR MASTER DATA ANALYST — UAF EX-IAM ===',
@@ -842,31 +797,30 @@
             `Nom et prénom : ${name}`,
             `Numéro étudiant : ${sid}`,
             `Email étudiant : ${semail}`,
-            `Score QCM automatique : ${score} / 40 pts`,
             '',
-            '--- PARTIE 1 : QCM (40 pts) ---',
+            '--- PARTIE 1 : QCM (40 réponses) ---',
             qcmLines,
             '',
-            '--- PARTIE 2 : ANALYSE DE CAS (20 pts) ---',
+            '--- PARTIE 2 : ANALYSE DE CAS ---',
             '',
-            'Q41-A (Données sensibles — 4 pts) :',
+            'Q41-A (Données sensibles) :',
             document.getElementById('q41a').value || '[Sans réponse]',
             '',
-            'Q41-B (Consentement LSEU — 5 pts) :',
+            'Q41-B (Consentement LSEU) :',
             document.getElementById('q41b').value || '[Sans réponse]',
             '',
-            'Q41-C (Application RGPD — 3 pts) :',
+            'Q41-C (Application RGPD) :',
             document.getElementById('q41c').value || '[Sans réponse]',
             '',
-            'Q41-D (3 principes violés — 6 pts) :',
+            'Q41-D (3 principes violés) :',
             document.getElementById('q41d').value || '[Sans réponse]',
             '',
-            'Q41-E (Analyse philosophique — 2 pts) :',
+            'Q41-E (Analyse philosophique) :',
             document.getElementById('q41e').value || '[Sans réponse]',
             '',
-            '--- PARTIE 3 : SYNTHESE PERSONNELLE (10 pts) ---',
+            '--- PARTIE 3 : SYNTHESE PERSONNELLE ---',
             '',
-            'Q42 (Responsabilité éthique — 10 pts) :',
+            'Q42 (Responsabilité éthique) :',
             document.getElementById('q42').value || '[Sans réponse]',
             '',
             '=== FIN DU DEVOIR ==='
@@ -875,59 +829,56 @@
         document.getElementById('form-section').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('res-name').innerHTML = `${name} — ${sid}`;
-        document.getElementById('res-score').innerHTML = score + ' / 40';
-        document.getElementById('rb1').innerHTML = score + ' / 40 pts';
-        document.getElementById('rb2').innerHTML = score + ' / 40 pts';
-
-        const detDiv = document.getElementById('qcm-det');
-        detDiv.innerHTML = '<div style="font-size:0.75rem; font-weight:600; margin-bottom:8px;">Détail du QCM :</div>';
-        details.forEach(d => {
-            detDiv.innerHTML += `<div class="detail-q"><span>Question ${d.num}</span><span class="${d.correct ? 'ok-c' : 'ko-c'}">${d.correct ? 'Correct' : 'Incorrect — attendu : ' + d.expected}</span></div>`;
-        });
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
-    function openMailto() {
-        const name = g('sname').trim();
-        const sid = g('sid').trim();
-        const subject = encodeURIComponent(`Devoir M. Data Analyst — ${name} (${sid})`);
+    // Envoi par email
+    function sendEmail() {
+        const name = getField('sname').trim();
+        const sid = getField('sid').trim();
+        const subject = encodeURIComponent(`Devoir Data Analyst — ${name} (${sid})`);
         let body = mailBody;
-        if (body.length > 1800) body = body.substring(0, 1800) + '\n... [Corps tronqué, veuillez copier-coller manuellement depuis votre devoir]';
+        if (body.length > 1800) body = body.substring(0, 1800) + '\n... [Corps tronqué]';
         const bodyEnc = encodeURIComponent(body);
         window.location.href = `mailto:asomabf@gmail.com?subject=${subject}&body=${bodyEnc}`;
         document.getElementById('sent-ok').style.display = 'block';
     }
 
-    // Gestionnaires d'événements pour la sélection visuelle et anti-copie
-    document.querySelectorAll('.opt').forEach(opt => {
-        const radio = opt.querySelector('input[type="radio"]');
-        if (radio) {
-            radio.addEventListener('change', function() {
-                const name = this.name;
-                document.querySelectorAll(`.opt input[name="${name}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
-                if (this.checked) this.closest('.opt').classList.add('sel');
-                updateProg();
-            });
-        }
-    });
+    // Initialisation au chargement
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sélection visuelle des options
+        document.querySelectorAll('.opt').forEach(opt => {
+            const radio = opt.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.addEventListener('change', function() {
+                    const name = this.name;
+                    document.querySelectorAll(`.opt input[name="${name}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
+                    if (this.checked) this.closest('.opt').classList.add('sel');
+                    updateProgress();
+                });
+            }
+        });
 
-    const textAreas = document.querySelectorAll('textarea');
-    textAreas.forEach(ta => {
-        ta.addEventListener('copy', (e) => e.preventDefault());
-        ta.addEventListener('cut', (e) => e.preventDefault());
-        ta.addEventListener('paste', (e) => e.preventDefault());
-    });
-    document.addEventListener('contextmenu', (e) => {
-        if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') e.preventDefault();
-    });
-    document.addEventListener('keydown', (e) => {
-        const tag = e.target.tagName;
-        if ((e.ctrlKey || e.metaKey) && ['c','x','a'].includes(e.key.toLowerCase()) && (tag === 'TEXTAREA' || tag === 'INPUT')) {
-            e.preventDefault();
-        }
-    });
+        // Anti-copie
+        const textAreas = document.querySelectorAll('textarea');
+        textAreas.forEach(ta => {
+            ta.addEventListener('copy', (e) => e.preventDefault());
+            ta.addEventListener('cut', (e) => e.preventDefault());
+            ta.addEventListener('paste', (e) => e.preventDefault());
+        });
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') e.preventDefault();
+        });
+        document.addEventListener('keydown', (e) => {
+            const tag = e.target.tagName;
+            if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a'].includes(e.key.toLowerCase()) && (tag === 'TEXTAREA' || tag === 'INPUT')) {
+                e.preventDefault();
+            }
+        });
 
-    initTimer();
+        initTimer();
+        updateProgress();
+    });
 </script>
 </body>
 </html>
